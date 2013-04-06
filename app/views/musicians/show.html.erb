@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @musician.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @musician.email %>
+</p>
+
+<p>
+  <b>Bio:</b>
+  <%= @musician.bio %>
+</p>
+
+<p>
+  <b>Bands I belong to:</b>
+  <ul>
+    <% @musician.bands.each do |band| %>
+      <li><%= link_to band.name, band %></li>
+    <% end %>
+    <li><%= link_to 'Add New Band', new_band_path %></li>
+  </ul>
+</p>
+
+<%= link_to 'Edit', edit_musician_path(@musician) %> |
+<%= link_to 'Back', musicians_path %>
