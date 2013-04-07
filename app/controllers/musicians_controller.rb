@@ -1,4 +1,5 @@
 class MusiciansController < ApplicationController
+  skip_before_filter :login_required, :only => ["new", "create"]
   # GET /musicians
   # GET /musicians.json
   def index
