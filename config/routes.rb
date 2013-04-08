@@ -1,5 +1,11 @@
 Tremello::Application.routes.draw do
+  match '/you',           :to => 'welcome#show',    :as => :you
+  match '/you/update',    :to => 'welcome#update',  :as => :you_update
 
+  match '/soundcloud/connect',    :to => 'soundcloud#connect',    :as => :soundcloud_connect
+  match '/soundcloud/connected',  :to => 'soundcloud#connected',  :as => :soundcloud_connected
+  match '/soundcloud/disconnect', :to => 'soundcloud#disconnect', :as => :soundcloud_disconnect
+  get 'oauth' => 'soundcloud#connect'  
   #login is  session#create
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
@@ -64,7 +70,7 @@ Tremello::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  # root :to => 'sessions#create'
+  root :to => 'musicians#index' 
 
   # See how all your routes lay out with "rake routes"
 

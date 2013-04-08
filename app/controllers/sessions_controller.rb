@@ -12,7 +12,6 @@ class SessionsController < ApplicationController
 			redirect_to musicians_path, :notice => 'Logged in!'
 		else
 			redirect_to login_path, :notice => 'Invalid email or password'				
-
 		end
 	end
 

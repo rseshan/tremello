@@ -1,0 +1,31 @@
+<script>
+$(document).ready(function() {
+
+  $('div.your-container-class').scPlayer({
+  autoPlay  :   true
+	});
+
+ //  $('#play').click(function() {
+ //  	console.log('yay');
+ //  	player.play();
+	// });
+});
+</script>
+
+
+<% client = Soundcloud.new(:client_id => 'd276b5f3aa390cae2ebfbc0c52f1f58d') %>
+<%= image_tag 'backward.png', :id => 'backward' %>
+<%= image_tag 'play.png',:id => 'play' %>
+<%= image_tag 'forward.png',:id => 'forward' %>
+<h1> hi <%= @me.username %> </h1>
+
+
+<div class="your-container-class">
+  <a href="https://soundcloud.com/todd-jones/fell-apart-on-demo-1">Fell Apart</a>
+  <a href="https://soundcloud.com/yanikjay/i-believe">Lykke Li remix</a>
+ </div>
+
+
+
+
+
