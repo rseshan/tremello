@@ -1,5 +1,8 @@
 Tremello::Application.routes.draw do
 
+  resources :invitations
+
+
   #login is  session#create
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
