@@ -42,7 +42,6 @@ class BandsController < ApplicationController
   def create
     @musician = @current_user
     @band = @musician.bands.build(params["band"])
-    binding.pry
     
     respond_to do |format|
       if @musician.save
