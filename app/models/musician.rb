@@ -1,5 +1,6 @@
 class Musician < ActiveRecord::Base
 	has_secure_password
+  validates :password, :presence => { :on => :create }
 
   attr_accessible :bio, :email, :name, :bands_attributes, :password, :password_confirmation
 

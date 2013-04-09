@@ -24,7 +24,7 @@ class BandsController < ApplicationController
   # GET /bands/new
   # GET /bands/new.json
   def new
-    @band = Band.new
+    @band = Band.new(params[:band])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -40,11 +40,12 @@ class BandsController < ApplicationController
   # POST /bands
   # POST /bands.json
   def create
-    @band = Band.new(params[:band])
-    #@band.musicians.build(current_user)
-
+    @musician = @current_user
+    @band = @musician.bands.build(params["band"])
+    binding.pry
+    
     respond_to do |format|
-      if @band.save
+      if @musician.save
         format.html { redirect_to @band, notice: 'Band was successfully created.' }
         format.json { render json: @band, status: :created, location: @band }
       else
