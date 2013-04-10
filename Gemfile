@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 gem "debugger", "~> 1.5.0"
+# gem "soundmanager-rails", "~> 0.1.4"
 gem 'soundcloud'
 
 gem "pry", "~> 0.9.12"

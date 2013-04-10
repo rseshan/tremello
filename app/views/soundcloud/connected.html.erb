@@ -1,15 +1,45 @@
+<script src="//connect.soundcloud.com/sdk.js"></script>
+
+<script src="soundmanager2.js"></script>
+
+
 <script>
 $(document).ready(function() {
 
-  $('div.your-container-class').scPlayer({
-  autoPlay  :   true
-	});
+ function getNextTrack() {
+   console.log('get next track');
+      $nextItem = $('.sc-trackslist li.active').next('li');
+  if(!$nextItem.length){
+    $nextItem = $('.sc-trackslist li:first');
+  }
+  return $nextItem;
+};
 
- //  $('#play').click(function() {
- //  	console.log('yay');
- //  	player.play();
-	// });
+ function getPreviousTrack() {
+   console.log('get next track');
+      $nextItem = $('.sc-trackslist li.active').prev('li');
+  if(!$nextItem.length){
+    $nextItem = $('.sc-trackslist li:last');
+  }
+  return $nextItem;
+};
+
+ $('.sc-next').click(function() {
+    console.log('fired');
+    var currentNext = getNextTrack();
+    $(currentNext).trigger('click');
+  });
+
+ $('.sc-prev').click(function() {
+    console.log('fired');
+    var currentNext = getNextTrack();
+    $(currentNext).trigger('click');
+  });
+
+
 });
+
+
 </script>
 
 
@@ -18,12 +48,15 @@ $(document).ready(function() {
 <%= image_tag 'play.png',:id => 'play' %>
 <%= image_tag 'forward.png',:id => 'forward' %>
 <h1> hi <%= @me.username %> </h1>
+<a href="#" class="sc-next" style="z-index:9999">BACK</a>
+<a href="#" class="sc-next" style="z-index:9999">FORWARD</a>
+ 
 
-
-<div class="your-container-class">
-  <a href="https://soundcloud.com/todd-jones/fell-apart-on-demo-1">Fell Apart</a>
+<div class="sc-player">
   <a href="https://soundcloud.com/yanikjay/i-believe">Lykke Li remix</a>
+  <a href="https://soundcloud.com/todd-jones/fell-apart-on-demo-1">Fell Apart</a>
  </div>
+
 
 
 
