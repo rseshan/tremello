@@ -6,6 +6,7 @@
 <script>
 $(document).ready(function() {
 
+
  function getNextTrack() {
    console.log('get next track');
       $nextItem = $('.sc-trackslist li.active').next('li');
@@ -28,33 +29,118 @@ $(document).ready(function() {
     console.log('fired');
     var currentNext = getNextTrack();
     $(currentNext).trigger('click');
+    var tape_on = "http://goodmix.fm/cassettes/fujiyama.svg?animate=true" ;
+  $('#tape').attr('src', tape_on);
   });
 
  $('.sc-prev').click(function() {
     console.log('fired');
-    var currentNext = getNextTrack();
+    var currentNext = getPreviousTrack();
     $(currentNext).trigger('click');
+      var tape_on = "http://goodmix.fm/cassettes/fujiyama.svg?animate=true" ;
+  $('#tape').attr('src', tape_on);
+
   });
 
+ $('.sc-play').click(function() {
+    console.log('fired');
+    var currentSong = $('.sc-trackslist li.active');
+    $(currentSong).trigger('click');
+    var tape_toggle = ($('#tape').attr("src") === "http://goodmix.fm/cassettes/fujiyama.svg")? "http://goodmix.fm/cassettes/fujiyama.svg?animate=true" : "http://goodmix.fm/cassettes/fujiyama.svg" ;
+  $('#tape').attr('src', tape_toggle);
+  });
 
+  $('.sc-stop').click(function() {
+    if ($('.sc-trackslist li.active').length > 0) {
+    var currentSong = $('.sc-trackslist li.active');
+    lastSong = getPreviousTrack();
+    lastSong.trigger('click');
+    currentSong = getNextTrack();
+    currentSong.trigger('click').trigger('click');
+
+  $('#purple_pause').attr('id', "purple_play");
+
+  var tape_off = "http://goodmix.fm/cassettes/fujiyama.svg" ;
+  $('#tape').attr('src', tape_off);
+
+    }
+  });
+
+  $('.sc-prev, .sc-next, .sc-play').click(function() {
+    var now_playing = $('div.sc-player div.sc-info h3').text();
+    $('#now_playing').html('Now Playing ' + now_playing);
+
+    var artist_name = $('div.sc-player div.sc-info h4').text();
+    $('#artist_name').html(artist_name);
+
+  });
+
+ $('#purple_play').click(function() {
+  var src = ($(this).attr("id") === "purple_play")? "purple_pause" : "purple_play";
+  $(this).attr('id', src);
+  
+  });
+
+ $('.sc-player').prepend('<img id="tape" src="http://goodmix.fm/cassettes/fujiyama.svg" type="image/svg+xml">');
+ console.log('alo');
+
+
+
+$('.sc-controls').remove();
+$('.sc-artwork-list').remove();
+$('div#other').append('<div class="sc-time-indicators"><span class="sc-position"></span> | <span class="sc-duration"></span></div>');
+
+
+  var timecode = function(ms) {
+    var hms = function(ms) {
+          return {
+            h: Math.floor(ms/(60*60*1000)),
+            m: Math.floor((ms/60000) % 60),
+            s: Math.floor((ms/1000) % 60)
+          };
+        }(ms),
+        tc = []; // Timecode array to be joined with '.'
+
+    if (hms.h > 0) {
+      tc.push(hms.h);
+    }
+
+    tc.push((hms.m < 10 && hms.h > 0 ? "0" + hms.m : hms.m));
+    tc.push((hms.s < 10  ? "0" + hms.s : hms.s));
+
+    return tc.join('.');
+  };
+
+$(document).bind('onMediaTimeUpdate.scPlayer', function(event){
+  $('span#other').html('the song is at' + timecode(event.position));
+  });
+
+$('.sc-player').hide();
 });
 
 
 </script>
 
+<br>
+  
+<!-- <img src="http://goodmix.fm/cassettes/fujiyama.svg?animate=true" -->
 
 <% client = Soundcloud.new(:client_id => 'd276b5f3aa390cae2ebfbc0c52f1f58d') %>
-<%= image_tag 'backward.png', :id => 'backward' %>
-<%= image_tag 'play.png',:id => 'play' %>
-<%= image_tag 'forward.png',:id => 'forward' %>
-<h1> hi <%= @me.username %> </h1>
-<a href="#" class="sc-next" style="z-index:9999">BACK</a>
-<a href="#" class="sc-next" style="z-index:9999">FORWARD</a>
- 
+<span id='other'></span>
+<div class="sc-info"> </div>
+<div id='bill'> <span id="now_playing"> </span> <span id="artist_name"></span> </div>
+<a href='#' id='purple_backward' class='sc-prev'></a>
+<a href='#' id='purple_play' class='sc-play'></a>
+<a href='#' id='purple_stop' class='sc-stop'></a>
+<a href='#' id='purple_forward' class='sc-next'></a>
+
+<br><br><br><br><br>
 
 <div class="sc-player">
+
   <a href="https://soundcloud.com/yanikjay/i-believe">Lykke Li remix</a>
   <a href="https://soundcloud.com/todd-jones/fell-apart-on-demo-1">Fell Apart</a>
+  <a href="https://soundcloud.com/yanikjay/comet-chaser">Comet Chaser</a>
  </div>
 
 
