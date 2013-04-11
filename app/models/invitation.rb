@@ -1,4 +1,4 @@
-class Invitation < ActiveRecord::Base
+ class Invitation < ActiveRecord::Base
   attr_accessible :status, :inviter_id, :invitee_id, :band_id
 
   STATUS = {
@@ -9,10 +9,20 @@ class Invitation < ActiveRecord::Base
 
   def accept
     self.status = STATUS[:accepted]
+    self.save
+    member_accepted = Membership.where(:band_id => self.band.id, :musician_id => self.invitee.id).first_or_create
   end
 
-  def decline
-    self.status = STATUS[:declined]
+  def inviter
+    Musician.find_by_id(self.inviter_id)
+  end
+
+  def invitee
+    Musician.find_by_id(self.invitee_id)
+  end
+
+  def band
+    Band.find_by_id(self.band_id)
   end
 
 end

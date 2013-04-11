@@ -14,9 +14,9 @@ class InvitationsController < ApplicationController
   # GET /invitations/1.json
   def show
     @invitation = Invitation.find(params[:id])
-    @inviter = Musician.find_by_id(@invitation.inviter_id)
-    @invitee = Musician.find_by_id(@invitation.invitee_id)
-    @band = Band.find_by_id(@invitation.band_id)
+    @inviter = @invitation.inviter
+    @invitee = @invitation.invitee
+    @band = @invitation.band
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @invitation }
@@ -43,6 +43,7 @@ class InvitationsController < ApplicationController
   # POST /invitations.json
   def create
     @invitation = Invitation.new(params[:invitation])
+    @invitation.inviter_id = @current_user.id
     @invitation.status = Invitation::STATUS[:sent]
     respond_to do |format|
       if @invitation.save
@@ -59,7 +60,9 @@ class InvitationsController < ApplicationController
   # PUT /invitations/1.json
   def update
     @invitation = Invitation.find(params[:id])
-
+    # @invitation.inviter_id = @current_user.id
+    @invitation.accept if params[:invitation][:status].to_i == Invitation::STATUS[:accepted]
+    
     respond_to do |format|
       if @invitation.update_attributes(params[:invitation])
         format.html { redirect_to @invitation, notice: 'Invitation was successfully updated.' }
@@ -71,15 +74,4 @@ class InvitationsController < ApplicationController
     end
   end
 
-  # DELETE /invitations/1
-  # DELETE /invitations/1.json
-  def destroy
-    @invitation = Invitation.find(params[:id])
-    @invitation.destroy
-
-    respond_to do |format|
-      format.html { redirect_to invitations_url }
-      format.json { head :no_content }
-    end
-  end
 end

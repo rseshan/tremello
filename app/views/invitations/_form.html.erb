@@ -11,9 +11,13 @@
     </div>
   <% end %>
 
-  <%= render :partial => 'form_fields', :locals => { :f => f } %>
-
-  <%= render :partial => 'form_actions', :locals => { :f => f } %>
+  <% if current_page?(new_invitation_path) %>
+    <%= render :partial => 'form_fields', :locals => { :f => f } %>
+  <% end %>
+  
+  <% unless current_page?(new_invitation_path) %>
+    <%= render :partial => 'form_actions', :locals => { :f => f } %>
+  <% end %>
 
   <%= render :partial => 'form_submit', :locals => { :f => f } %>
 
