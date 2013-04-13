@@ -1,0 +1,8 @@
+  <div class="field">
+    <label for="invitation_invitee_id">Who do you want to invite?</label><br />
+    <%= f.select :invitee_id, options_for_select(inviteable_musicians(@current_user)) %>
+  </div>
+  <div class="field">
+    <%= f.label :band_id %><br />
+    <%= f.select :band_id, options_for_select(inviteable_bands(@current_user)) %>
+  </div>

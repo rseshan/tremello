@@ -1,0 +1,24 @@
+<%= form_for(@invitation) do |f| %>
+  <% if @invitation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@invitation.errors.count, "error") %> prohibited this invitation from being saved:</h2>
+
+      <ul>
+      <% @invitation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if current_page?(new_invitation_path) %>
+    <%= render :partial => 'form_fields', :locals => { :f => f } %>
+  <% end %>
+  
+  <% unless current_page?(new_invitation_path) %>
+    <%= render :partial => 'form_actions', :locals => { :f => f } %>
+  <% end %>
+
+  <%= render :partial => 'form_submit', :locals => { :f => f } %>
+
+<% end %>
