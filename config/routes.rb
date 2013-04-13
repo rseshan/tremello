@@ -1,7 +1,11 @@
 Tremello::Application.routes.draw do
 
+  root :to => 'sessions#create'
+  
+  resources :bands
+  resources :musicians
+  resources :locations
   resources :invitations
-
 
   #login is  session#create
   get 'login' => 'sessions#new'
@@ -11,12 +15,6 @@ Tremello::Application.routes.draw do
 
   #logout is session#destroy
   #sign up is musicians#new
-
-  resources :bands
-
-
-  resources :musicians
-
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
