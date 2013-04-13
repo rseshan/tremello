@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130409133505) do
+ActiveRecord::Schema.define(:version => 20130413224013) do
 
   create_table "bands", :force => true do |t|
     t.string   "name"
     t.string   "bio"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+    t.integer  "location_id"
   end
 
   create_table "invitations", :force => true do |t|
@@ -25,6 +26,17 @@ ActiveRecord::Schema.define(:version => 20130409133505) do
     t.integer  "inviter_id"
     t.integer  "invitee_id"
     t.integer  "band_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "address"
+    t.string   "city"
+    t.string   "state"
+    t.string   "country"
+    t.float    "latitude"
+    t.float    "longitude"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -43,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20130409133505) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
+    t.integer  "location_id"
   end
 
 end
