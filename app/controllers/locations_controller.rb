@@ -8,11 +8,14 @@ class LocationsController < ApplicationController
   end
 
   def create
-    @location = Location.new(params[:location])
+    @location = Location.where(params[:location]).first_or_create
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to locations_path, notice: 'You have successfully added a location.' }
+        @musician = Musician.where(:id => current_user.id).first
+        @musician.location_id = @location.id
+        @musician.save
+        format.html { redirect_to musician_path(current_user), notice: 'You have successfully marked your territory!' }
         format.json { render json: @location, status: :created, location: @location }
       else
         format.html { render action: "new" }
@@ -47,7 +50,10 @@ class LocationsController < ApplicationController
   def destroy
     @location = Location.find(params[:id])
     @location.destroy
+    @musician = Musician.where(:id => current_user.id).first
+    @musician.location_id = nil
+    @musician.save
 
-    redirect_to locations_path
+    redirect_to musician_path(current_user)
   end
 end

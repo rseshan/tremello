@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 		@musician = Musician.find_by_email(params[:email])
 		if @musician && @musician.authenticate(params[:password])
 			login(@musician) 
-			redirect_to musicians_path, :notice => 'Logged in!'
+			redirect_to @musician, :notice => 'Logged in!'
 		else
 			redirect_to login_path, :notice => 'Invalid email or password'				
 

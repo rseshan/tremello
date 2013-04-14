@@ -16,6 +16,20 @@
 </p>
 
 <p>
+  <% if @musician.location_id? %>
+    <b>Where I jam:</b>
+    <%= @musician.location.full_address %> 
+    <br>
+    <%= link_to 'I jam elsewhere now', edit_location_path(@musician.location_id) %> |
+    <%= link_to "I'm currently homeless", 
+    location_path(@musician.location_id),  method: :delete %>
+  <% else %>
+    <b>Add a location:</b>
+    <%= link_to 'Where I jam', new_location_path %>
+  <% end %>
+</p>
+
+<p>
   <b>Bands I belong to:</b>
   <ul>
     <% @musician.bands.each do |band| %>
